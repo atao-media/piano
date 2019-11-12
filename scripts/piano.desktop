@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Virtual Piano
+Name[fr]=Piano virtuel
+Comment=GUI for a simple piano keyboard
+Comment[fr]=Interface visuelle pour un clavier simple de piano
+Exec=piano start
+Icon=vmpk
+Terminal=false
+Type=Application
+Categories=Application;AudioVideo;Audio;Music;

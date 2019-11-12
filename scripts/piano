@@ -1,0 +1,74 @@
+#!/bin/bash
+
+# Script to launch an audio server and a virtual keyboard for music making.
+
+# TODO send any message in a unique log file
+
+case $1 in
+
+    start )
+
+        mkdir -pv ~/.log
+
+        fluidsynth --server --gain=5 --no-shell \
+          --audio-driver=alsa \
+          --midi-driver=alsa_seq \
+          /usr/share/sounds/sf2/FluidR3_GM.sf2 \
+          /usr/share/sounds/sf2/FluidR3_GS.sf2 \
+          /usr/share/sounds/sf2/TimGM6mb.sf2 &
+        #   /usr/share/sounds/sf2/TimGM6mb.sf2 1>~/.log/fluidsynth.log 2>&1 &
+
+        sleep 1
+
+        if ! pgrep fluidsynth
+        then
+            echo "There was a problem starting the audio server(s)."
+        else
+            SYNTH_IN=$(aconnect -o|grep client|grep FLUID|cut -d':' -f1|cut -d' ' -f2)
+            SYNTH_IN=$SYNTH_IN:$(aconnect -o|grep -A1 client|grep -A1 FLUID|tail -n 1|cut -d"'" -f1|tr -d ' ')
+
+            vmpk &
+
+            sleep 1
+
+            if pgrep vmpk
+            then
+                VMPK_OUT=$(aconnect -i|grep client|grep VMPK|cut -d':' -f1|cut -d' ' -f2)
+                VMPK_OUT=$VMPK_OUT:$(aconnect -i|grep -A1 client|grep -A1 VMPK|tail -n 1|cut -d"'" -f1|tr -d ' ')
+                aconnect $VMPK_OUT $SYNTH_IN
+                echo "VMPK ($VMPK_OUT) is connected to Fluidsynth ($SYNTH_IN)."
+            else
+                echo "There was a problem starting VMPK."
+            fi
+
+            KB_OUT=$(aconnect -i|grep LPK25|grep client|cut -d':' -f1|cut -d' ' -f2)
+            KB_OUT=$KB_OUT:$(aconnect -i|grep LPK25|grep -A1 client|tail -n 1|cut -d"'" -f1|tr -d ' ')
+            if [ "$KB_OUT" = ":" ]
+            then
+                echo "LPK 25 ($KB_OUT) not available.";
+            else
+                if pgrep vmpk
+                then
+                    VMPK_IN=$(aconnect -o|grep VMPK|grep -A1 client|cut -d':' -f1|cut -d' ' -f2)
+                    VMPK_IN=$VMPK_IN:$(aconnect -o|grep VMPK|grep -A1 client|tail -n 1|cut -d"'" -f1|tr -d ' ')
+                    aconnect $KB_OUT $VMPK_IN
+                    echo "LPK 25 ($KB_OUT) is connected to Fluidsynth ($SYNTH_IN) through VMPK ($VMPK_IN / $VMPK_OUT) ."
+                else
+                    aconnect $KB_OUT $SYNTH_IN
+                    echo "LPK 25 ($KB_OUT) is directly connected to Fluidsynth ($SYNTH_IN)."
+                fi
+            fi
+        fi
+
+        ;;
+
+    stop )
+        killall fluidsynth
+        killall vmpk
+        echo "Audio server(s) and virtual keyboard stopped."
+        ;;
+
+    * )
+        echo "Please specify start or stop..."
+        ;;
+esac
