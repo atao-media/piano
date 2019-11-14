@@ -4,17 +4,17 @@ A very simple piano keyboard:
 - no GUI for sound server (such as [QjackCtl](https://qjackctl.sourceforge.io/)) or synthesizer (such as[Qsynth](https://qsynth.sourceforge.io/qsynth-index.html)).
 - if a Akai LPK 25 is connected, it will control the piano.
 
-Only used [Alsa](http://www.alsa-project.org) and [FluidSynth](http://www.fluidsynth.org/).
+It only uses [VMPK](), [Alsa](http://www.alsa-project.org) and [FluidSynth](http://www.fluidsynth.org/).
 
 Tested under Ubuntu 18.04 and Ubuntu Studio 16.04.1 LTS.
 
-> There is an online keyboard [here](https://www.onlinemusictools.com/kb/).
+> There is some online keyboard:
+* [onlinemusictools](https://www.onlinemusictools.com/kb/)
+* [Keith Horwood's one](https://keithwhor.com/music/)
 
 ## TODO
 
-* working desktop shorcut file
-
-* retrieve changes for bristol 
+* after launching "Virtual Piano", sometime no sound is emitted
 
 * working with any MIDI device, not only Akai LPK 25.
 
@@ -63,7 +63,7 @@ sudo netstat -tulpn|grep 9800
 
 ```
 
-> BUG desktop shorcut doesn't work !
+> BUG After launching "Virtual Piano", sometime no sound is emitted. With Qjack check the server status and stop it if needed.
 
 ## French keyboard
 
