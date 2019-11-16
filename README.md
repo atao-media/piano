@@ -8,7 +8,7 @@ It only uses [VMPK](), [Alsa](http://www.alsa-project.org) and [FluidSynth](http
 
 Tested under Ubuntu 18.04 and Ubuntu Studio 16.04.1 LTS.
 
->There is some online keyboard:  
+>There are some online keyboards:  
 >* [onlinemusictools](https://www.onlinemusictools.com/kb/)
 >* [Keith Horwood's one](https://keithwhor.com/music/)
 
