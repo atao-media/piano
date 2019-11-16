@@ -8,9 +8,9 @@ It only uses [VMPK](), [Alsa](http://www.alsa-project.org) and [FluidSynth](http
 
 Tested under Ubuntu 18.04 and Ubuntu Studio 16.04.1 LTS.
 
-> There is some online keyboard:
-* [onlinemusictools](https://www.onlinemusictools.com/kb/)
-* [Keith Horwood's one](https://keithwhor.com/music/)
+>There is some online keyboard:  
+>* [onlinemusictools](https://www.onlinemusictools.com/kb/)
+>* [Keith Horwood's one](https://keithwhor.com/music/)
 
 ## TODO
 
@@ -65,7 +65,7 @@ sudo netstat -tulpn|grep 9800
 
 > BUG After launching "Virtual Piano", sometime no sound is emitted. With Qjack check the server status and stop it if needed.
 
-## French keyboard
+## French keyboard
 
 A file azerty.xml is provided that binds :
 - a first series of notes with:
